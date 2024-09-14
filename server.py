@@ -1,3 +1,5 @@
+"""set up back end server for a sentiment analysis widget"""
+
 from flask import Flask, request, jsonify, render_template
 from EmotionDetection import emotion_detector
 
@@ -5,10 +7,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def render_index_page():
+    """render html template"""
     return render_template('index.html')
-    
+
 @app.route('/emotionDetector', methods=['GET','POST'])
 def detect_emotion():
+    """communicate with sentiment analyzer server"""
     if request.method == 'POST':
         # Extract JSON data from POST request
         data = request.json
@@ -28,12 +32,12 @@ def detect_emotion():
     response_message = (
         f"For the given statement, the system response is 'anger': {response['anger']}, "
         f"'disgust': {response['disgust']}, 'fear': {response['fear']}, 'joy': {response['joy']} "
-        f"and 'sadness': {response['sadness']}. The dominant emotion is {response['dominant_emotion']}."
+        f"and 'sadness': {response['sadness']}. The dominant emotion "
+        f"is {response['dominant_emotion']}."
     )
 
     return jsonify({"response": response_message})
 
-
 if __name__ == '__main__':
-     app.run()
+    app.run()
      
