@@ -17,20 +17,12 @@ def detect_emotion():
         # Extract query parameter from GET request
         statement = request.args.get('textToAnalyze')
 
-    # Check if statement is provided
-    if not statement or statement.strip() == "":
-        # Return a 400 status code for blank input
-        response = jsonify({
-            "response": "Invalid text! Please try again."
-        })
-        response.status_code = 400
-        return response
-        
     response=emotion_detector(statement)
 
     # If dominant_emotion is None, return error message
-    if emotions_dict.get('dominant_emotion') is None:
-        return jsonify({"response": "Invalid text! Please try again."})
+    if response.get('dominant_emotion') is None:
+        response_message="Invalid text! Please try again."
+        return jsonify({"response": response_message})
 
     # Create a human-readable message
     response_message = (

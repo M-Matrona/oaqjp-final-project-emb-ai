@@ -52,6 +52,17 @@ def emotion_detector(text_to_analyse):
                     'dominant_emotion': dominant_emotion
                 }
 
+        if response.status_code==400:
+
+            return {
+                        'anger': None,
+                        'disgust': None,
+                        'fear': None,
+                        'joy': None,
+                        'sadness': None,
+                        'dominant_emotion': None
+                    }
+
         return f"Error: {response.status_code}, {response.text}"    
         
     except requests.Timeout:
